@@ -1,4 +1,46 @@
-package product
+package systembolaget
+
+type Category1 string
+type Category2 string
+type WebUrl string
+
+const (
+	Ol                   Category1 = "Öl"
+	Sprit                Category1 = "Sprit"
+	Cider_o_blanddrycker Category1 = "Cider & blanddrycker"
+	Alkoholfritt         Category1 = "Alkoholfritt"
+	Presentartiklar      Category1 = "Presentartiklar"
+	Vin                  Category1 = "Vin"
+
+	Rott_vin        Category2 = "Rött vin"
+	Vitt_vin        Category2 = "Vitt vin"
+	Mousserande_vin Category2 = "Mousserande vin"
+	Rosevin         Category2 = "Rosévin"
+	Vinlada         Category2 = "Vinlåda"
+	Starkvin        Category2 = "Starkvin"
+
+	URL WebUrl = "https://www.systembolaget.se/api/gateway/productsearch/search/"
+)
+
+type Client struct {
+	Client ClientInterface
+}
+
+// NewClient acts as a factory and creates a Systembolaget Client to use for retrieving data from www.systembolaget.se
+// func NewClient(clientImpl ClientInterface) (*Client, error) {
+// 	client := &Client{Client: clientImpl}
+// 	return client, nil
+// }
+
+func NewClient(clientImpl ClientInterface) (*Client, error) {
+	client := &Client{Client: clientImpl}
+	return client, nil
+}
+
+// The interface/func to implement
+type ClientInterface interface {
+	GetProductPages(category1 Category1, category2 Category2) []ProductPage
+}
 
 type ProductPage struct {
 	Metadata        Metadata      `json:"metadata,omitempty"`
